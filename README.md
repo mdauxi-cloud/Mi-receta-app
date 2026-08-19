@@ -9,7 +9,7 @@ app/
 ├── models/         # Modelo: acceso a datos (SQLite)
 ├── controllers/    # Controlador: rutas Flask (Blueprints)
 └── views/          # Vista: templates Jinja2 + estáticos
-schema.sql          # Definición de la tabla `recipes`
+schema.sql          # Definición de las tablas `recipes` y `categories`
 run.py              # Punto de entrada de la aplicación
 ```
 
@@ -45,10 +45,10 @@ uv run flask --app run run --debug
 
 La app estará disponible en http://127.0.0.1:5000. Al arrancar se crea automáticamente la base de datos SQLite en `instance/recetas.db`.
 
-## Funcionalidades (v1)
+## Funcionalidades
 
-- Listar recetas
+- Listar recetas, con filtro opcional por categoría
 - Ver el detalle de una receta
-- Crear una receta nueva
-- Editar una receta existente
-- Eliminar una receta
+- Crear, editar y eliminar recetas
+- Asignar una categoría (opcional) a cada receta
+- Crear, listar, editar y eliminar categorías (al eliminar una categoría, las recetas asociadas quedan sin categoría)

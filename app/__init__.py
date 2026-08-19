@@ -28,9 +28,11 @@ def create_app(test_config=None):
         with app.app_context():
             database.init_db()
 
+    from app.controllers.category_controller import categories_bp
     from app.controllers.recipe_controller import recipes_bp
 
     app.register_blueprint(recipes_bp)
+    app.register_blueprint(categories_bp)
 
     @app.get("/")
     def index():

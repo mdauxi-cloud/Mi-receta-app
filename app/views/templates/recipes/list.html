@@ -5,6 +5,21 @@
 {% block content %}
 <h1>Recetas</h1>
 
+{% if categories %}
+    <form method="get" class="filter-form">
+        <label for="category_id">Filtrar por categoría</label>
+        <select id="category_id" name="category_id" onchange="this.form.submit()">
+            <option value="">Todas</option>
+            {% for category in categories %}
+                <option value="{{ category['id'] }}" {% if selected_category_id == category['id'] %}selected{% endif %}>
+                    {{ category['name'] }}
+                </option>
+            {% endfor %}
+        </select>
+        <noscript><button type="submit" class="button">Filtrar</button></noscript>
+    </form>
+{% endif %}
+
 {% if recipes %}
     <ul class="recipe-list">
         {% for recipe in recipes %}
@@ -12,6 +27,9 @@
                 <a href="{{ url_for('recipes.detail_recipe', recipe_id=recipe['id']) }}">
                     <h2>{{ recipe['title'] }}</h2>
                 </a>
+                {% if recipe['category_name'] %}
+                    <span class="badge">{{ recipe['category_name'] }}</span>
+                {% endif %}
                 {% if recipe['description'] %}
                     <p>{{ recipe['description'] }}</p>
                 {% endif %}
@@ -23,6 +41,8 @@
             </li>
         {% endfor %}
     </ul>
+{% elif selected_category_id %}
+    <p>No hay recetas en esta categoría.</p>
 {% else %}
     <p>Todavía no hay recetas. <a href="{{ url_for('recipes.new_recipe') }}">Crea la primera</a>.</p>
 {% endif %}

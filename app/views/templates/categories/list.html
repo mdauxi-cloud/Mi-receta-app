@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}Categorías · Mi Receta App{% endblock %}
+
+{% block content %}
+<h1>Categorías</h1>
+
+<p><a class="button" href="{{ url_for('categories.new_category') }}">Nueva categoría</a></p>
+
+{% if categories %}
+    <ul class="recipe-list">
+        {% for category in categories %}
+            <li class="recipe-card category-card">
+                <span>{{ category['name'] }}</span>
+                <div class="actions">
+                    <a class="button" href="{{ url_for('categories.edit_category', category_id=category['id']) }}">Editar</a>
+                    <form method="post" action="{{ url_for('categories.delete_category', category_id=category['id']) }}"
+                          onsubmit="return confirm('¿Eliminar esta categoría? Las recetas asociadas quedarán sin categoría.');">
+                        <button type="submit" class="button button--danger">Eliminar</button>
+                    </form>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>Todavía no hay categorías. <a href="{{ url_for('categories.new_category') }}">Crea la primera</a>.</p>
+{% endif %}
+{% endblock %}

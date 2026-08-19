@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}{% if category and category['id'] %}Editar categoría{% else %}Nueva categoría{% endif %} · Mi Receta App{% endblock %}
+
+{% block content %}
+<h1>{% if category and category['id'] %}Editar categoría{% else %}Nueva categoría{% endif %}</h1>
+
+<form method="post" class="recipe-form">
+    <label for="name">Nombre *</label>
+    <input type="text" id="name" name="name" value="{{ category['name'] if category else '' }}">
+    {% if errors.name %}<p class="error">{{ errors.name }}</p>{% endif %}
+
+    <button type="submit" class="button">Guardar</button>
+</form>
+{% endblock %}

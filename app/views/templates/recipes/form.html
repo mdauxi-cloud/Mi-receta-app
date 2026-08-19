@@ -21,6 +21,17 @@
     <textarea id="steps" name="steps" rows="6">{{ recipe['steps'] if recipe else '' }}</textarea>
     {% if errors.steps %}<p class="error">{{ errors.steps }}</p>{% endif %}
 
+    <label for="category_id">Categoría</label>
+    <select id="category_id" name="category_id">
+        <option value="">Sin categoría</option>
+        {% for category in categories %}
+            <option value="{{ category['id'] }}" {% if recipe and recipe['category_id'] == category['id'] %}selected{% endif %}>
+                {{ category['name'] }}
+            </option>
+        {% endfor %}
+    </select>
+    {% if errors.category_id %}<p class="error">{{ errors.category_id }}</p>{% endif %}
+
     <div class="form-row">
         <div>
             <label for="prep_time_minutes">Tiempo de preparación (min)</label>

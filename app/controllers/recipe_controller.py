@@ -1,5 +1,6 @@
 from flask import Blueprint, flash, redirect, render_template, request, url_for
 
+from app.models import category as category_model
 from app.models import recipe as recipe_model
 
 recipes_bp = Blueprint("recipes", __name__, url_prefix="/recetas")
@@ -38,6 +39,17 @@ def _parse_form(form):
     cook_time_minutes = _parse_int("cook_time_minutes", "El tiempo de cocción")
     servings = _parse_int("servings", "Las porciones")
 
+    category_id_raw = form.get("category_id", "").strip()
+    category_id = None
+    if category_id_raw:
+        try:
+            category_id = int(category_id_raw)
+        except ValueError:
+            errors["category_id"] = "Categoría no válida."
+        else:
+            if category_model.get_by_id(category_id) is None:
+                errors["category_id"] = "La categoría seleccionada no existe."
+
     data = {
         "title": title,
         "description": form.get("description", "").strip() or None,
@@ -46,26 +58,41 @@ def _parse_form(form):
         "prep_time_minutes": prep_time_minutes,
         "cook_time_minutes": cook_time_minutes,
         "servings": servings,
+        "category_id": category_id,
     }
     return data, errors
 
 
 @recipes_bp.get("")
 def list_recipes():
-    recipes = recipe_model.get_all()
-    return render_template("recipes/list.html", recipes=recipes)
+    category_id_raw = request.args.get("category_id", "").strip()
+    category_id = int(category_id_raw) if category_id_raw.isdigit() else None
+    recipes = recipe_model.get_all(category_id=category_id)
+    categories = category_model.get_all()
+    return render_template(
+        "recipes/list.html",
+        recipes=recipes,
+        categories=categories,
+        selected_category_id=category_id,
+    )
 
 
 @recipes_bp.get("/nueva")
 def new_recipe():
-    return render_template("recipes/form.html", recipe=None, errors={})
+    categories = category_model.get_all()
+    return render_template(
+        "recipes/form.html", recipe=None, errors={}, categories=categories
+    )
 
 
 @recipes_bp.post("/nueva")
 def create_recipe():
     data, errors = _parse_form(request.form)
     if errors:
-        return render_template("recipes/form.html", recipe=data, errors=errors), 400
+        categories = category_model.get_all()
+        return render_template(
+            "recipes/form.html", recipe=data, errors=errors, categories=categories
+        ), 400
 
     recipe_id = recipe_model.create(data)
     flash("Receta creada correctamente.", "success")
@@ -87,7 +114,10 @@ def edit_recipe(recipe_id):
     if recipe is None:
         flash("La receta solicitada no existe.", "error")
         return redirect(url_for("recipes.list_recipes"))
-    return render_template("recipes/form.html", recipe=recipe, errors={})
+    categories = category_model.get_all()
+    return render_template(
+        "recipes/form.html", recipe=recipe, errors={}, categories=categories
+    )
 
 
 @recipes_bp.post("/<int:recipe_id>/editar")
@@ -99,7 +129,10 @@ def update_recipe(recipe_id):
     data, errors = _parse_form(request.form)
     if errors:
         data["id"] = recipe_id
-        return render_template("recipes/form.html", recipe=data, errors=errors), 400
+        categories = category_model.get_all()
+        return render_template(
+            "recipes/form.html", recipe=data, errors=errors, categories=categories
+        ), 400
 
     recipe_model.update(recipe_id, data)
     flash("Receta actualizada correctamente.", "success")
