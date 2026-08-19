@@ -6,4 +6,7 @@ uv.lock.bak
 instance/*.db
 !instance/.gitkeep
 
+app/views/static/uploads/*
+!app/views/static/uploads/.gitkeep
+
 .python-version.local

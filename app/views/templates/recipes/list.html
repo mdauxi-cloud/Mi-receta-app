@@ -23,21 +23,26 @@
 {% if recipes %}
     <ul class="recipe-list">
         {% for recipe in recipes %}
-            <li class="recipe-card">
-                <a href="{{ url_for('recipes.detail_recipe', recipe_id=recipe['id']) }}">
-                    <h2>{{ recipe['title'] }}</h2>
-                </a>
-                {% if recipe['category_name'] %}
-                    <span class="badge">{{ recipe['category_name'] }}</span>
+            <li class="recipe-card recipe-card--with-image">
+                {% if recipe['image_filename'] %}
+                    <img class="recipe-thumb" src="{{ url_for('static', filename=recipe['image_filename']) }}" alt="{{ recipe['title'] }}">
                 {% endif %}
-                {% if recipe['description'] %}
-                    <p>{{ recipe['description'] }}</p>
-                {% endif %}
-                <p class="meta">
-                    {% if recipe['prep_time_minutes'] is not none %}Prep: {{ recipe['prep_time_minutes'] }} min ·{% endif %}
-                    {% if recipe['cook_time_minutes'] is not none %}Cocción: {{ recipe['cook_time_minutes'] }} min ·{% endif %}
-                    {% if recipe['servings'] is not none %}{{ recipe['servings'] }} porciones{% endif %}
-                </p>
+                <div>
+                    <a href="{{ url_for('recipes.detail_recipe', recipe_id=recipe['id']) }}">
+                        <h2>{{ recipe['title'] }}</h2>
+                    </a>
+                    {% if recipe['category_name'] %}
+                        <span class="badge">{{ recipe['category_name'] }}</span>
+                    {% endif %}
+                    {% if recipe['description'] %}
+                        <p>{{ recipe['description'] }}</p>
+                    {% endif %}
+                    <p class="meta">
+                        {% if recipe['prep_time_minutes'] is not none %}Prep: {{ recipe['prep_time_minutes'] }} min ·{% endif %}
+                        {% if recipe['cook_time_minutes'] is not none %}Cocción: {{ recipe['cook_time_minutes'] }} min ·{% endif %}
+                        {% if recipe['servings'] is not none %}{{ recipe['servings'] }} porciones{% endif %}
+                    </p>
+                </div>
             </li>
         {% endfor %}
     </ul>

@@ -1,3 +1,5 @@
+import io
+
 VALID_RECIPE = {
     "title": "Tortilla de patatas",
     "description": "Clásico español",
@@ -116,6 +118,46 @@ def test_filter_recipes_by_category(client):
     response = client.get("/recetas")
     assert b"Tortilla de patatas" in response.data
     assert b"Zumo de naranja" in response.data
+
+
+def test_create_recipe_with_image(client):
+    data = dict(VALID_RECIPE)
+    data["image"] = (io.BytesIO(b"fake png bytes"), "foto.png")
+    response = client.post(
+        "/recetas/nueva", data=data, content_type="multipart/form-data"
+    )
+    assert response.status_code == 302
+
+    detail = client.get("/recetas/1")
+    assert b"uploads/" in detail.data
+
+
+def test_create_recipe_rejects_invalid_image_extension(client):
+    data = dict(VALID_RECIPE)
+    data["image"] = (io.BytesIO(b"not an image"), "foto.exe")
+    response = client.post(
+        "/recetas/nueva", data=data, content_type="multipart/form-data"
+    )
+    assert response.status_code == 400
+    assert "no permitido".encode() in response.data
+
+
+def test_delete_recipe_removes_image_file(client, app):
+    data = dict(VALID_RECIPE)
+    data["image"] = (io.BytesIO(b"fake png bytes"), "foto.png")
+    client.post("/recetas/nueva", data=data, content_type="multipart/form-data")
+
+    from pathlib import Path
+
+    from app.models import recipe as recipe_model
+
+    with app.app_context():
+        recipe = recipe_model.get_by_id(1)
+        image_path = Path(app.static_folder) / recipe["image_filename"]
+    assert image_path.exists()
+
+    client.post("/recetas/1/eliminar")
+    assert not image_path.exists()
 
 
 def test_deleting_category_keeps_recipe(client):

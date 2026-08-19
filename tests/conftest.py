@@ -16,4 +16,8 @@ def app():
 
 @pytest.fixture
 def client(app):
-    return app.test_client()
+    uploads_dir = Path(app.static_folder) / "uploads"
+    before = set(uploads_dir.iterdir())
+    yield app.test_client()
+    for path in set(uploads_dir.iterdir()) - before:
+        path.unlink()

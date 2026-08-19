@@ -75,6 +75,40 @@ body {
     color: var(--color-text);
 }
 
+.recipe-card--with-image {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+}
+
+.recipe-thumb {
+    width: 96px;
+    height: 96px;
+    object-fit: cover;
+    border-radius: 6px;
+    flex-shrink: 0;
+    background: var(--color-bg);
+}
+
+.recipe-detail-image {
+    width: 100%;
+    max-width: 480px;
+    max-height: 320px;
+    object-fit: cover;
+    border-radius: 8px;
+    display: block;
+    margin: 1rem 0;
+}
+
+.image-preview {
+    display: block;
+    width: 160px;
+    height: 160px;
+    object-fit: cover;
+    border-radius: 6px;
+    margin-top: 0.5rem;
+}
+
 .meta {
     color: #7a6f62;
     font-size: 0.9rem;

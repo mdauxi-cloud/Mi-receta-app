@@ -45,10 +45,18 @@ uv run flask --app run run --debug
 
 La app estará disponible en http://127.0.0.1:5000. Al arrancar se crea automáticamente la base de datos SQLite en `instance/recetas.db`.
 
+## Cargar recetas de ejemplo
+
+```bash
+uv run python scripts/seed_desserts.py
+```
+
+Carga 4 recetas de postres (flan de coco, queque de chocolate, torta de melocotón, suspiro limeño) en la categoría "Postres", con ilustración incluida.
+
 ## Funcionalidades
 
 - Listar recetas, con filtro opcional por categoría
 - Ver el detalle de una receta
 - Crear, editar y eliminar recetas
-- Asignar una categoría (opcional) a cada receta
+- Asignar una categoría (opcional) e imagen (opcional) a cada receta
 - Crear, listar, editar y eliminar categorías (al eliminar una categoría, las recetas asociadas quedan sin categoría)

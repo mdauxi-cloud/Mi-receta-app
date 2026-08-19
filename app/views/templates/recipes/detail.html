@@ -7,6 +7,10 @@
 
 <h1>{{ recipe['title'] }}</h1>
 
+{% if recipe['image_filename'] %}
+    <img class="recipe-detail-image" src="{{ url_for('static', filename=recipe['image_filename']) }}" alt="{{ recipe['title'] }}">
+{% endif %}
+
 {% if recipe['category_name'] %}
     <span class="badge">{{ recipe['category_name'] }}</span>
 {% endif %}

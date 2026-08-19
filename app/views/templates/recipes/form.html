@@ -5,7 +5,7 @@
 {% block content %}
 <h1>{% if recipe and recipe['id'] %}Editar receta{% else %}Nueva receta{% endif %}</h1>
 
-<form method="post" class="recipe-form">
+<form method="post" class="recipe-form" enctype="multipart/form-data">
     <label for="title">Título *</label>
     <input type="text" id="title" name="title" value="{{ recipe['title'] if recipe else '' }}">
     {% if errors.title %}<p class="error">{{ errors.title }}</p>{% endif %}
@@ -31,6 +31,14 @@
         {% endfor %}
     </select>
     {% if errors.category_id %}<p class="error">{{ errors.category_id }}</p>{% endif %}
+
+    <label for="image">Imagen</label>
+    {% if recipe and recipe['image_filename'] %}
+        <img class="image-preview" src="{{ url_for('static', filename=recipe['image_filename']) }}" alt="Imagen actual">
+        <p class="meta">Sube una imagen nueva para reemplazar la actual.</p>
+    {% endif %}
+    <input type="file" id="image" name="image" accept="image/*">
+    {% if errors.image %}<p class="error">{{ errors.image }}</p>{% endif %}
 
     <div class="form-row">
         <div>

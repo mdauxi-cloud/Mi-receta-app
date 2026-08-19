@@ -42,8 +42,8 @@ def create(data):
         INSERT INTO recipes
             (title, description, ingredients, steps,
              prep_time_minutes, cook_time_minutes, servings, category_id,
-             created_at, updated_at)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+             image_filename, created_at, updated_at)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """,
         (
             data["title"],
@@ -54,6 +54,7 @@ def create(data):
             data.get("cook_time_minutes"),
             data.get("servings"),
             data.get("category_id"),
+            data.get("image_filename"),
             now,
             now,
         ),
@@ -69,7 +70,7 @@ def update(recipe_id, data):
         UPDATE recipes
         SET title = ?, description = ?, ingredients = ?, steps = ?,
             prep_time_minutes = ?, cook_time_minutes = ?, servings = ?,
-            category_id = ?, updated_at = ?
+            category_id = ?, image_filename = ?, updated_at = ?
         WHERE id = ?
         """,
         (
@@ -81,6 +82,7 @@ def update(recipe_id, data):
             data.get("cook_time_minutes"),
             data.get("servings"),
             data.get("category_id"),
+            data.get("image_filename"),
             _now(),
             recipe_id,
         ),

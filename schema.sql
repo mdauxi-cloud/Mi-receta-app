@@ -13,6 +13,7 @@ CREATE TABLE IF NOT EXISTS recipes (
     cook_time_minutes INTEGER,
     servings INTEGER,
     category_id INTEGER REFERENCES categories(id) ON DELETE SET NULL,
+    image_filename TEXT,
     created_at TEXT NOT NULL,
     updated_at TEXT NOT NULL
 );
