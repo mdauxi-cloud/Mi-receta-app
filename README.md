@@ -49,9 +49,13 @@ La app estará disponible en http://127.0.0.1:5000. Al arrancar se crea automát
 
 ```bash
 uv run python scripts/seed_desserts.py
+uv run python scripts/seed_meats.py
 ```
 
-Carga 4 recetas de postres (flan de coco, queque de chocolate, torta de melocotón, suspiro limeño) en la categoría "Postres", con ilustración incluida.
+- `seed_desserts.py`: 4 recetas de postres (flan de coco, queque de chocolate, torta de melocotón, suspiro limeño) en la categoría "Postres".
+- `seed_meats.py`: 3 recetas de carnes (lomo saltado, costillas de cerdo a la barbacoa, pollo a la brasa) en la categoría "Platos fuertes".
+
+Ambos scripts incluyen ingredientes, pasos detallados e ilustración por receta.
 
 ## Funcionalidades
 
