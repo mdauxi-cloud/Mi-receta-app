@@ -1,0 +1,160 @@
+:root {
+    --color-bg: #fdfaf6;
+    --color-text: #2e2620;
+    --color-primary: #c9622a;
+    --color-primary-dark: #a34e1f;
+    --color-danger: #b3261e;
+    --color-border: #e6ddd3;
+    --color-card-bg: #ffffff;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: "Segoe UI", system-ui, sans-serif;
+    background: var(--color-bg);
+    color: var(--color-text);
+    line-height: 1.5;
+}
+
+.site-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 1.5rem;
+    background: var(--color-card-bg);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.brand {
+    font-weight: bold;
+    font-size: 1.25rem;
+    color: var(--color-primary-dark);
+    text-decoration: none;
+}
+
+.site-header nav a {
+    margin-left: 1rem;
+    color: var(--color-text);
+    text-decoration: none;
+}
+
+.site-header nav a:hover {
+    color: var(--color-primary);
+}
+
+.container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 1.5rem;
+}
+
+.recipe-list {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    gap: 1rem;
+}
+
+.recipe-card {
+    background: var(--color-card-bg);
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    padding: 1rem;
+}
+
+.recipe-card h2 {
+    margin: 0 0 0.25rem;
+}
+
+.recipe-card a {
+    text-decoration: none;
+    color: var(--color-text);
+}
+
+.meta {
+    color: #7a6f62;
+    font-size: 0.9rem;
+}
+
+.recipe-form label {
+    display: block;
+    margin-top: 1rem;
+    font-weight: 600;
+}
+
+.recipe-form input,
+.recipe-form textarea {
+    width: 100%;
+    padding: 0.5rem;
+    margin-top: 0.25rem;
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    font: inherit;
+}
+
+.form-row {
+    display: flex;
+    gap: 1rem;
+}
+
+.form-row > div {
+    flex: 1;
+}
+
+.error {
+    color: var(--color-danger);
+    margin: 0.25rem 0 0;
+    font-size: 0.9rem;
+}
+
+.button {
+    display: inline-block;
+    margin-top: 1.5rem;
+    padding: 0.6rem 1.2rem;
+    background: var(--color-primary);
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    text-decoration: none;
+    font: inherit;
+}
+
+.button:hover {
+    background: var(--color-primary-dark);
+}
+
+.button--danger {
+    background: var(--color-danger);
+}
+
+.actions {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.flashes {
+    list-style: none;
+    padding: 0;
+}
+
+.flash {
+    padding: 0.75rem 1rem;
+    border-radius: 6px;
+    margin-bottom: 1rem;
+}
+
+.flash--success {
+    background: #e3f3e1;
+    color: #2c5c2b;
+}
+
+.flash--error {
+    background: #fbe6e4;
+    color: var(--color-danger);
+}

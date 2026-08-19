@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %}{{ recipe['title'] }} · Mi Receta App{% endblock %}
+
+{% block content %}
+<a href="{{ url_for('recipes.list_recipes') }}">&larr; Volver a recetas</a>
+
+<h1>{{ recipe['title'] }}</h1>
+
+{% if recipe['description'] %}
+    <p class="description">{{ recipe['description'] }}</p>
+{% endif %}
+
+<p class="meta">
+    {% if recipe['prep_time_minutes'] is not none %}Preparación: {{ recipe['prep_time_minutes'] }} min ·{% endif %}
+    {% if recipe['cook_time_minutes'] is not none %}Cocción: {{ recipe['cook_time_minutes'] }} min ·{% endif %}
+    {% if recipe['servings'] is not none %}{{ recipe['servings'] }} porciones{% endif %}
+</p>
+
+<h2>Ingredientes</h2>
+<ul>
+    {% for line in recipe['ingredients'].splitlines() %}
+        {% if line.strip() %}<li>{{ line.strip() }}</li>{% endif %}
+    {% endfor %}
+</ul>
+
+<h2>Preparación</h2>
+<ol>
+    {% for line in recipe['steps'].splitlines() %}
+        {% if line.strip() %}<li>{{ line.strip() }}</li>{% endif %}
+    {% endfor %}
+</ol>
+
+<div class="actions">
+    <a class="button" href="{{ url_for('recipes.edit_recipe', recipe_id=recipe['id']) }}">Editar</a>
+    <form method="post" action="{{ url_for('recipes.delete_recipe', recipe_id=recipe['id']) }}"
+          onsubmit="return confirm('¿Seguro que quieres eliminar esta receta?');">
+        <button type="submit" class="button button--danger">Eliminar</button>
+    </form>
+</div>
+{% endblock %}

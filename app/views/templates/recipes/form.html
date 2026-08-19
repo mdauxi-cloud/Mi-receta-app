@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}{% if recipe and recipe['id'] %}Editar receta{% else %}Nueva receta{% endif %} · Mi Receta App{% endblock %}
+
+{% block content %}
+<h1>{% if recipe and recipe['id'] %}Editar receta{% else %}Nueva receta{% endif %}</h1>
+
+<form method="post" class="recipe-form">
+    <label for="title">Título *</label>
+    <input type="text" id="title" name="title" value="{{ recipe['title'] if recipe else '' }}">
+    {% if errors.title %}<p class="error">{{ errors.title }}</p>{% endif %}
+
+    <label for="description">Descripción</label>
+    <textarea id="description" name="description" rows="2">{{ recipe['description'] if recipe else '' }}</textarea>
+
+    <label for="ingredients">Ingredientes * (uno por línea)</label>
+    <textarea id="ingredients" name="ingredients" rows="6">{{ recipe['ingredients'] if recipe else '' }}</textarea>
+    {% if errors.ingredients %}<p class="error">{{ errors.ingredients }}</p>{% endif %}
+
+    <label for="steps">Preparación * (un paso por línea)</label>
+    <textarea id="steps" name="steps" rows="6">{{ recipe['steps'] if recipe else '' }}</textarea>
+    {% if errors.steps %}<p class="error">{{ errors.steps }}</p>{% endif %}
+
+    <div class="form-row">
+        <div>
+            <label for="prep_time_minutes">Tiempo de preparación (min)</label>
+            <input type="number" min="0" id="prep_time_minutes" name="prep_time_minutes"
+                   value="{{ recipe['prep_time_minutes'] if recipe and recipe['prep_time_minutes'] is not none else '' }}">
+            {% if errors.prep_time_minutes %}<p class="error">{{ errors.prep_time_minutes }}</p>{% endif %}
+        </div>
+        <div>
+            <label for="cook_time_minutes">Tiempo de cocción (min)</label>
+            <input type="number" min="0" id="cook_time_minutes" name="cook_time_minutes"
+                   value="{{ recipe['cook_time_minutes'] if recipe and recipe['cook_time_minutes'] is not none else '' }}">
+            {% if errors.cook_time_minutes %}<p class="error">{{ errors.cook_time_minutes }}</p>{% endif %}
+        </div>
+        <div>
+            <label for="servings">Porciones</label>
+            <input type="number" min="0" id="servings" name="servings"
+                   value="{{ recipe['servings'] if recipe and recipe['servings'] is not none else '' }}">
+            {% if errors.servings %}<p class="error">{{ errors.servings }}</p>{% endif %}
+        </div>
+    </div>
+
+    <button type="submit" class="button">Guardar</button>
+</form>
+{% endblock %}

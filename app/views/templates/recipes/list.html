@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}Recetas · Mi Receta App{% endblock %}
+
+{% block content %}
+<h1>Recetas</h1>
+
+{% if recipes %}
+    <ul class="recipe-list">
+        {% for recipe in recipes %}
+            <li class="recipe-card">
+                <a href="{{ url_for('recipes.detail_recipe', recipe_id=recipe['id']) }}">
+                    <h2>{{ recipe['title'] }}</h2>
+                </a>
+                {% if recipe['description'] %}
+                    <p>{{ recipe['description'] }}</p>
+                {% endif %}
+                <p class="meta">
+                    {% if recipe['prep_time_minutes'] is not none %}Prep: {{ recipe['prep_time_minutes'] }} min ·{% endif %}
+                    {% if recipe['cook_time_minutes'] is not none %}Cocción: {{ recipe['cook_time_minutes'] }} min ·{% endif %}
+                    {% if recipe['servings'] is not none %}{{ recipe['servings'] }} porciones{% endif %}
+                </p>
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>Todavía no hay recetas. <a href="{{ url_for('recipes.new_recipe') }}">Crea la primera</a>.</p>
+{% endif %}
+{% endblock %}

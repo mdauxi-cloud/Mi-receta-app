@@ -1,0 +1,19 @@
+[project]
+name = "mi-receta-app"
+version = "0.1.0"
+description = "Aplicación de recetas de cocina (Flask + SQLite, arquitectura MVC)"
+authors = [
+    { name = "mdauxi-cloud", email = "mdauxi@gmail.com" }
+]
+requires-python = ">=3.12"
+dependencies = [
+    "flask>=3.1.3",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.3.0",
+]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
